@@ -10,6 +10,9 @@ import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import HomePage from "./components/HomePage";
 import "./index.css";
+import UserList from "./components/UserList.jsx";
+import UserDuties from "./pages/DutiesUser";
+import SpecificUser from "./components/SpecificUser.jsx";
 
 
 function App() {
@@ -20,10 +23,14 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/duties" element={<Duties />} />
+          <Route path="/duties" element={<Duties/>} />
           <Route path="/navbar" element={<Navbar />} />
+          <Route path="/users" element={<UserList />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/uduties" element={<UserDuties/>} />
+          <Route path="/specific-user" element={<SpecificUser />} />
+          
         </Routes>
       </Router>
   );

@@ -20,7 +20,7 @@ mongoose
   .then(() => console.log('MongoDB connected successfully'))
   .catch((err) => console.log('MongoDB connection failed: ', err));
 
-// User Schema with hashed password
+
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
@@ -29,18 +29,18 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-// Duty Schema
+
 const DutySchema = new mongoose.Schema({
   dutyTitle: { type: String, required: true },
   description: { type: String, required: true },
-  assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   status: { type: String, default: 'pending' },
   dateAssigned: { type: Date, default: Date.now },
 });
 
 const Duty = mongoose.model('Duty', DutySchema);
 
-// Middleware to verify token
+
 const verifyToken = (req, res, next) => {
   const token = req.header('Authorization')?.split(' ')[1];
 
@@ -59,15 +59,15 @@ const verifyToken = (req, res, next) => {
 
 
 
-// Routes
+
 app.get('/', (req, res) => {
   res.send('Welcome to the Online Duty Management System API');
 });
 
-// User Routes
+
 app.post('/api/users/register', async (req, res) => {
   const { username, password, role } = req.body;
-console.log("req.body",req.body)
+
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -81,7 +81,7 @@ console.log("req.body",req.body)
 
 app.post('/api/users/login', async (req, res) => {
   const { username, password } = req.body;
-  console.log("req.body",req.body)
+  
 
   try {
     const user = await User.findOne({ username });
@@ -94,18 +94,33 @@ app.post('/api/users/login', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ message: 'Login successful', token ,success:true});
+    res.status(200).json({ message: 'Login successful', token ,success:true,user:user._id});
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error });
   }
 });
 
-app.get('/api/users', async (req, res) => {
+app.get('/api/users',verifyToken, async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error });
+  }
+});
+
+app.get('/api/users/:id', verifyToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id).select('username'); 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' }); 
+    }
+    res.status(200).json(user); 
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'An error occurred while fetching the user' }); 
   }
 });
 
@@ -132,7 +147,7 @@ app.put('/api/users/:id', verifyToken, async (req, res) => {
   }
 });
 
-// Duty Routes
+
 app.post('/api/duties', verifyToken, async (req, res) => {
   const { dutyTitle, description, assignedTo } = req.body;
 
@@ -155,18 +170,19 @@ app.post('/api/duties', verifyToken, async (req, res) => {
   }
 });
 
-app.get('/api/duties', verifyToken, async (req, res) => {
+app.get('/api/duties', verifyToken,async (req, res) => {
   try {
     const duties = await Duty.find().populate('assignedTo', 'username role');
     res.status(200).json(duties);
-  } catch (error) {
+  } catch (error) { 
     res.status(500).json({ message: 'Error fetching duties', error });
   }
 });
 
+
 app.get('/api/duties/:userId', verifyToken, async (req, res) => {
   const { userId } = req.params;
-
+  
   try {
     const duties = await Duty.find({ assignedTo: userId }).populate('assignedTo', 'username');
     res.status(200).json(duties);
@@ -202,7 +218,26 @@ app.put('/api/duties/:id/status', verifyToken, async (req, res) => {
 });
 
 
-// Start Server
+// Delete a duty by ID
+app.delete('/api/duties/:id', verifyToken, async (req, res) => {
+  const dutyId = req.params.id;
+
+  try {
+    const deletedDuty = await Duty.findByIdAndDelete(dutyId);
+
+    if (!deletedDuty) {
+      return res.status(404).json({ message: 'Duty not found' });
+    }
+
+    res.status(200).json({ message: 'Duty deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting duty', error });
+  }
+});
+
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

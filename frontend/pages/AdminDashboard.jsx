@@ -11,12 +11,10 @@ const   AdminDashboard = () => {
           <li>
             <Link to="/duties">Manage Duties</Link>
           </li>
-          <li>
-            <Link to="/users">View Users</Link>
-          </li>
+          
         </ul>
       </nav>
-      <div className="user-list-section">
+      <div className="user-list-section user-duties">
         <h2>User List</h2>
         <UserList />
       </div>

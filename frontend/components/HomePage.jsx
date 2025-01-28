@@ -1,10 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom"; // Add this import
 import Navbar from "../components/Navbar"; // Correct import path
-
 const HomePage = () => {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+const[user,setuser]=useState()
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if (token) {
+      setuser(JSON.parse(atob(token.split(".")[1]))); // Decode JWT payload
+    }
+    },[]);
+    
   
   return (
     <div className="home-page">

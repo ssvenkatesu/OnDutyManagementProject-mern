@@ -696,7 +696,324 @@ body {
 
 
 
+/* General styling for the dashboard */
+.admin-dashboard {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4fcfb;
+  color: #333;
+  padding: 20px;
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* Heading styles */
+.admin-dashboard h1 {
+  font-size: 2.5rem;
+  color: #4caf50;
+  margin-bottom: 20px;
+}
+
+/* Navigation styles */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  background-color: #4caf50;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #45a049;
+}
+
+/* User list section */
+.user-list-section {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.user-list-section h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #4caf50;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* General list styles */
+.user-list-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list-section ul li {
+  background-color: #f9f9f9;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-list-section ul li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Button styles for additional actions */
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .user-list-section {
+    padding: 15px;
+  }
+
+  .admin-dashboard h1 {
+    font-size: 2rem;
+  }
+}
 
 
 
 
+
+/* user-dashboard.css */
+.user-dashboard,.admin-dashboard {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(to right, #e0f7fa, #e0f2f1);
+  min-height: 100vh;
+}
+
+.user-dashboard h1,.admin-dashboard h1 {
+  font-size: 2.5rem;
+  color: #00796b;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.user-duties {
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.user-duties h2 {
+  font-size: 1.8rem;
+  color: #004d40;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #004d40;
+  padding-bottom: 5px;
+}
+
+.user-duties .duty-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f3eeee;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.user-duties .duty-list-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.user-duties button {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-duties button:hover {
+  background-color: #004d40;
+}
+
+@media (max-width: 768px) {
+  .user-duties {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .user-dashboard h1 {
+    font-size: 2rem;
+  }
+}
+
+
+.user-list-section{
+  text-align: center;
+}
+
+/* admin-dashboard.css */
+.admin-dashboard {
+  font-family: 'Arial', sans-serif;
+  margin: 0px;
+  padding: 20px;
+  background: linear-gradient(to right, #e0f7fa, #e0f2f1);
+  min-height: 100vh;
+}
+
+.admin-dashboard h1 {
+  font-size: 2.5rem;
+  color: #00796b;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.admin-actions {
+  background-color: linear-gradient(to right, #e0f7fa, #e0f2f1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.admin-actions h2 {
+  font-size: 1.8rem;
+  color: #004d40;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #004d40;
+  padding-bottom: 5px;
+}
+
+.admin-actions .action-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-actions .action-list-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-actions button {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.admin-actions button:hover {
+  background-color: #004d40;
+}
+
+/* Admin Dashboard User List Section */
+.admin-user-list-section {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .admin-actions {
+    padding: 15px;
+    margin: 10px;
+  }
+.admin-dashboard {
+  margin-top: 50px;
+}
+  .admin-dashboard h1 {
+    margin-top: 50px;
+    font-size: 2rem;
+  }
+}
+
+
+.login-form{
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 50vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.login-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-name{
+  font-size: 1.5rem;
+  color: #004d40;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #004d40;
+  padding-bottom: 5px;
+  text-align: center;
+}
+.duties-page{
+  margin-top:20px;
+}

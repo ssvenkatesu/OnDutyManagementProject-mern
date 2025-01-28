@@ -38,17 +38,16 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-      setUser(null);
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-      navigate("/login");
-    };
+    localStorage.removeItem("token");
+    console.log("logout")
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          Duty Manager
+          Online Duty Management System
         </Link>
         <div className="navbar-links">
           {!user ? (

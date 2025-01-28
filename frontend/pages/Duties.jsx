@@ -5,13 +5,10 @@ import AssignDutyForm from "../components/AssignDutyForm";
 const Duties = () => {
   return (
     <div className="duties-page">
-      <h1>Manage Duties</h1>
+      <h1 className="user-duties">Manage Duties</h1>
       <div className="duties-container">
-        <div className="duty-list-section">
+        <div className="duty-list-section user-duties">
           <DutyList />
-        </div>
-        <div className="assign-duty-section">
-          <AssignDutyForm />
         </div>
       </div>
     </div>

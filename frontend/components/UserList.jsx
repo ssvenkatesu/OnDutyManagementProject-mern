@@ -5,11 +5,12 @@ const UserList = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch("https://localhost:3000/api/users", {
+      const response = await fetch("http://localhost:3000/api/users", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      
       const data = await response.json();
       setUsers(data);
     };

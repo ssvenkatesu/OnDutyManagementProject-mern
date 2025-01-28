@@ -12,6 +12,8 @@ export const register = async (userData) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  window.location.href = "/login";
+
 };
 
 export const getCurrentUser = () => {

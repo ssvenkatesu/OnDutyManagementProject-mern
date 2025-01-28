@@ -18,10 +18,12 @@ const LoginForm = () => {
 const response=await axios.post("http://localhost:3000/api/users/login", credentials);
 
 if(response.data.success){
+  
   console.log(response.data.token)
-      
       navigate("/home");
+    
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("id", response.data.user);
 }
     } catch (error) {
       alert("Login failed. Please check your credentials.");
@@ -29,7 +31,7 @@ if(response.data.success){
   };
 
   return (
-   
+   <><div className="login-container">
     <div className="login-form">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
@@ -51,7 +53,7 @@ if(response.data.success){
         />
         <button type="submit">Login</button>
       </form>
-    </div>
+    </div></div></>
   );
 };
 

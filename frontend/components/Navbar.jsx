@@ -7,7 +7,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem("token");
+    console.log("logout")
     navigate("/login");
   };
 
@@ -43,7 +44,7 @@ const Navbar = () => {
                   My Dashboard
                 </Link>
               )}
-              <button className="logout-button" onClick={logout}>
+              <button className="logout-button" onClick={handleLogout}>
                 Logout
               </button>
             </>
