@@ -79,7 +79,8 @@ const UserDuties = () => {
         <p>No duties assigned.</p>
       )}
       <br />
-      <button onClick={handleReload}>Refresh the Duties</button>
+      <div className="buttonarrange">
+      <button onClick={handleReload}>Refresh the Duties</button></div>
     </div>
   );
 };

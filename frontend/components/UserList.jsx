@@ -20,7 +20,7 @@ const UserList = () => {
 
   return (
     <div className="user-list">
-      <h2>Users</h2>
+      
       {users.length > 0 ? (
         <ul>
           {users.map((user) => (

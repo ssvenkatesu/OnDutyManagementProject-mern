@@ -3,6 +3,7 @@ import DutyList from "../components/DutyList";
 import UserDuties from "../components/UserDuties";
 import AssignDutyForm from "../components/AssignDutyForm";
 import UserProfile from "../components/SpecificUser";
+import { Link } from "react-router-dom";
 
 const DutiesUser = () => {
   return (
@@ -17,6 +18,14 @@ const DutiesUser = () => {
         <div className="duty-list-section">
           < UserDuties />
         </div>
+        <nav>
+        <ul>
+  
+          <li>
+            <Link to="/">Back to Home</Link>
+          </li>
+        </ul>
+      </nav>
         
       </div>
     </div>

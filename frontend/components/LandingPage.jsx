@@ -107,7 +107,7 @@ const LandingPage = () => {
     <div className="landing-page">
       <Navbar user={user} setUser={setUser} />
       <div className="intro-section">
-        <h1>Welcome to Online Duty Management</h1>
+        <h1>Welcome to On Duty Management System</h1>
         <p>Your solution for managing duties efficiently.</p>
         <button onClick={goToDashboard} className="homepage-button">
           {user ? (user.role === "in-charge" ? "Go to Incharge Dashboard" : "Go to User Dashboard") : "Login to Start"}
@@ -131,7 +131,8 @@ const Navbar = ({ user, setUser }) => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          Online Duty Management System
+          On Duty Management System
+          <br/>
         </Link>
         <div className="navbar-links">
           {!user ? (

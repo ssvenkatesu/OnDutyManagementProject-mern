@@ -8,7 +8,7 @@ const SpecificUser = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userId = localStorage.getItem('id'); // Get ID from localStorage
+      const userId = localStorage.getItem('id'); 
       if (!userId) {
         setError('No user ID found in localStorage.');
         setLoading(false);
@@ -18,7 +18,7 @@ const SpecificUser = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` }, // Include token in request
+          headers: { Authorization: `Bearer ${token}` }, 
         });
         setUser(response.data); // Set user data
       } catch (err) {
@@ -42,7 +42,7 @@ const SpecificUser = () => {
 
   return (
     <div className="user-profile">
-      <h1>User</h1>
+      
       {user ? (
         <div>
           
