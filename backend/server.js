@@ -11,7 +11,7 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-
+6
 mongoose
   .connect('mongodb://localhost:27017/ondutymanagement', {
     useNewUrlParser: true,
@@ -240,4 +240,4 @@ app.delete('/api/duties/:id', verifyToken, async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-});
+});   

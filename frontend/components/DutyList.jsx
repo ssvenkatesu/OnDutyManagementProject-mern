@@ -62,7 +62,7 @@ const DutyList = () => {
       <button id="approveButton" style="margin-right: 10px; padding: 10px 15px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;">Approve</button>
       <button id="disapproveButton" style="padding: 10px 15px; background-color: red; color: white; border: none; border-radius: 4px; cursor: pointer;">Disapprove</button>
       <br/><br/>
-      <button id="cancelButton" style="padding: 8px 12px; background-color: gray; color: white; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+      <button id="cancelButton" style="padding: 8px 12px; background-color: red; color: white; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
     `;
 
     document.body.appendChild(popup);

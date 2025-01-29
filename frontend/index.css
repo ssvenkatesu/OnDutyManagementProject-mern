@@ -46,21 +46,9 @@ General Reset
   }
   
   /* Buttons */
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-  }
+
   
-  button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-  }
+
   
   /* Forms */
   form {
@@ -236,16 +224,7 @@ General Reset
     }
     
     /* Navbar */
-    .navbar {
-      background-color: #4caf50;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
+ 
     
     .navbar a {
       color: #fff;
@@ -480,11 +459,7 @@ General Reset
   }
 
   /* Navbar container */
-.navbar {
-  background-color: #2c3e50;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+
 
 .navbar-container {
   display: flex;
@@ -654,7 +629,7 @@ body {
 }
 
 .intro-section button {
-  background: linear-gradient(to right, #09ea2e, #009688);
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -663,7 +638,7 @@ body {
 }
 
 .intro-section button:hover {
-  background: linear-gradient(to right, #09ea2e, #009688);
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
 }
 
 
@@ -678,7 +653,7 @@ body {
 }
 
 .home-content button {
-  background: linear-gradient(to right, #09ea2e, #009688);
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -727,7 +702,7 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: #fff;
-  background-color: #4caf50;
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 1rem;
@@ -781,7 +756,7 @@ nav ul li a:hover {
 
 /* Button styles for additional actions */
 button {
-  background-color: #4caf50;
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -867,7 +842,7 @@ button:hover {
 }
 
 .user-duties button {
-  background-color: #00796b;
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   color: white;
   border: none;
   border-radius: 5px;
@@ -878,7 +853,7 @@ button:hover {
 }
 
 .user-duties button:hover {
-  background-color: #004d40;
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
 }
 
 @media (max-width: 768px) {
@@ -949,7 +924,7 @@ button:hover {
 }
 
 .admin-actions button {
-  background-color: #00796b;
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   color: white;
   border: none;
   border-radius: 5px;
@@ -960,7 +935,7 @@ button:hover {
 }
 
 .admin-actions button:hover {
-  background-color: #004d40;
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
 }
 
 /* Admin Dashboard User List Section */
@@ -1021,7 +996,7 @@ button:hover {
 /* Navbar.css */
 
 .navbar {
-  background: linear-gradient(to right, #09ea2e, #009688);
+  background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   padding: 15px 20px;
   display: flex;
   justify-content: center;
@@ -1121,12 +1096,4 @@ button:hover {
 
 
 
-.homepage-button{
-  background-color: #4caf50;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s;
-}
+
