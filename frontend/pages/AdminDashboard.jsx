@@ -11,7 +11,9 @@ const   AdminDashboard = () => {
           <li>
             <Link to="/duties">Manage Duties</Link>
           </li>
-          
+          <li>
+            <Link to="/">Back to Home</Link>
+          </li>
         </ul>
       </nav>
       <div className="user-list-section user-duties">

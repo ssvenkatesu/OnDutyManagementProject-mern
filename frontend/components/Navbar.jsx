@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          Online Duty Management
+          On Duty Management System
         </Link>
         <div className="navbar-links">
           {!user ? (
@@ -30,23 +30,18 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/" className="nav-link">
-                Home
-              </Link>
+              
 
-              {user.role === "in-charge" && (
-                <Link to="/admin-dashboard" className="nav-link">
-                  Incharge-dashboard
-                </Link>
-              )}
+              
               {user.role === "user" && (
                 <Link to="/user-dashboard" className="nav-link">
                   My Dashboard
                 </Link>
               )}
+              <div className="nav-link">
               <button className="logout-button" onClick={handleLogout}>
                 Logout
-              </button>
+              </button></div>
             </>
           )}
         </div>
@@ -56,4 +51,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 

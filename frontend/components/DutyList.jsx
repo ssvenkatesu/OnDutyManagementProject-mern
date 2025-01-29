@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const DutyList = () => {
   const [duties, setDuties] = useState([]);
@@ -104,7 +105,7 @@ const DutyList = () => {
 
       if (response.ok) {
         const updatedDuty = await response.json();
-        alert(`Duty status updated to: ${updatedDuty.status}`);
+        // alert(`Duty status updated to: ${updatedDuty.status}`);
         setDuties((prevDuties) =>
           prevDuties.map((duty) =>
             duty._id === dutyId ? { ...duty, status: updatedDuty.status } : duty
@@ -125,7 +126,9 @@ const DutyList = () => {
 
   return (
     <div>
+
       <h2>Duty List</h2>
+      
       {duties.length > 0 ? (
         <ul>
           {duties.map((duty) => (
@@ -147,6 +150,15 @@ const DutyList = () => {
       ) : (
         <p>No duties assigned.</p>
       )}
+      <br />
+      <nav>
+              <ul>
+                
+                <li>
+                  <Link to="/">Back to Home</Link>
+                </li>
+              </ul>
+            </nav>
       
     </div>
   );

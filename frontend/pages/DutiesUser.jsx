@@ -11,12 +11,13 @@ const DutiesUser = () => {
       <UserProfile/></div>
       <h1>My Duty Requests</h1>
       <div className="duties-container">
+      <div className="assign-duty-section">
+          <AssignDutyForm />
+        </div>
         <div className="duty-list-section">
           < UserDuties />
         </div>
-        <div className="assign-duty-section">
-          <AssignDutyForm />
-        </div>
+        
       </div>
     </div>
   );

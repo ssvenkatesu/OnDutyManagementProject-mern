@@ -11,16 +11,16 @@ const LoginForm = () => {
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
 const response=await axios.post("http://localhost:3000/api/users/login", credentials);
 
 if(response.data.success){
+
   
   console.log(response.data.token)
-      navigate("/home");
+      navigate("/");
     
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("id", response.data.user);
