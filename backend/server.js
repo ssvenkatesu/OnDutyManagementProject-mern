@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 6
 mongoose
-  .connect('mongodb://localhost:27017/ondutymanagement', {
+  .connect('mongodb+srv://venkatesu:sankara2718@cluster0.9uflh.mongodb.net/ondutymanagement', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
