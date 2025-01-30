@@ -11,7 +11,7 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-6
+
 mongoose
   .connect('mongodb+srv://venkatesu:sankara2718@cluster0.9uflh.mongodb.net/ondutymanagement', {
     useNewUrlParser: true,
@@ -124,28 +124,28 @@ app.get('/api/users/:id', verifyToken, async (req, res) => {
   }
 });
 
-app.delete('/api/users/:id', verifyToken, async (req, res) => {
-  const { id } = req.params;
+// app.delete('/api/users/:id', verifyToken, async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    await User.findByIdAndDelete(id);
-    res.status(200).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting user', error });
-  }
-});
+//   try {
+//     await User.findByIdAndDelete(id);
+//     res.status(200).json({ message: 'User deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error deleting user', error });
+//   }
+// });
 
-app.put('/api/users/:id', verifyToken, async (req, res) => {
-  const { id } = req.params;
-  const { username, password, role } = req.body;
+// app.put('/api/users/:id', verifyToken, async (req, res) => {
+//   const { id } = req.params;
+//   const { username, password, role } = req.body;
 
-  try {
-    const updatedUser = await User.findByIdAndUpdate(id, { username, password, role }, { new: true });
-    res.status(200).json({ message: 'User updated successfully', updatedUser });
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating user', error });
-  }
-});
+//   try {
+//     const updatedUser = await User.findByIdAndUpdate(id, { username, password, role }, { new: true });
+//     res.status(200).json({ message: 'User updated successfully', updatedUser });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error updating user', error });
+//   }
+// });
 
 
 app.post('/api/duties', verifyToken, async (req, res) => {
@@ -218,7 +218,7 @@ app.put('/api/duties/:id/status', verifyToken, async (req, res) => {
 });
 
 
-// Delete a duty by ID
+
 app.delete('/api/duties/:id', verifyToken, async (req, res) => {
   const dutyId = req.params.id;
 

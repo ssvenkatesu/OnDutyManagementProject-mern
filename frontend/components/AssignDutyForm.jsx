@@ -151,10 +151,10 @@ const AssignDutyForm = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch user and duties when the component mounts
+  
   useEffect(() => {
     const fetchUserAndDuties = async () => {
-      const userId = localStorage.getItem("id"); // Get ID from localStorage
+      const userId = localStorage.getItem("id"); 
       const token = localStorage.getItem("token");
 
       if (!userId || !token) {
@@ -165,11 +165,11 @@ const AssignDutyForm = () => {
       try {
         setLoading(true);
         
-        // Fetch user data
+       
         const userResponse = await axios.get(`http://localhost:3000/api/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUser(userResponse.data); // Store the fetched user
+        setUser(userResponse.data); 
 
         
       } catch (err) {
@@ -196,8 +196,8 @@ const AssignDutyForm = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setDuties((prevDuties) => [...prevDuties, response.data]); // Update duties dynamically
-      setDuty({ dutyTitle: "", description: "", assignedTo: "" }); // Reset form
+      setDuties((prevDuties) => [...prevDuties, response.data]); 
+      setDuty({ dutyTitle: "", description: "", assignedTo: "" });
     } catch (err) {
       setError("Error submitting the form. Please try again.");
     }
