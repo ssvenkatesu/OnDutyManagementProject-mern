@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const handleReload = () => {
   window.location.reload();
@@ -79,6 +80,7 @@ const UserDuties = () => {
         <p>No duties assigned.</p>
       )}
       <br />
+    
       
       </div>
     
