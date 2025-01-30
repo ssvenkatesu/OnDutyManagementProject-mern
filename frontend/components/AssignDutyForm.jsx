@@ -68,7 +68,7 @@ const AssignDutyForm = () => {
   const deleteDuty = async (dutyId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/duties/${dutyId}`, {
+      await axios.delete(`https://ondutymanagementproject-mern-2.onrender.com/api/duties/${dutyId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

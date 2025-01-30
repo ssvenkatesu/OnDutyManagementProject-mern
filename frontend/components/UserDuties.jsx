@@ -23,7 +23,7 @@ const UserDuties = () => {
           navigate('/login');
           return;
         }
-        const response = await axios.get(`http://localhost:3000/api/duties/${userId}`, {
+        const response = await axios.get(`https://ondutymanagementproject-mern-2.onrender.com/api/duties/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
