@@ -17,7 +17,7 @@ const SpecificUser = () => {
 
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
+        const response = await axios.get(`https://ondutymanagementproject-mern-2.onrender.com/api/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }, 
         });
         setUser(response.data); // Set user data

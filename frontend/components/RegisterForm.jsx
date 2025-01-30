@@ -19,7 +19,7 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       // Use formData here instead of credentials
-      const response = await axios.post("http://localhost:3000/api/users/register", formData);
+      const response = await axios.post("https://ondutymanagementproject-mern-2.onrender.com/api/users/register", formData);
 
       if (response.data.success) {
         navigate("/login"); // Navigate to login page after successful registration

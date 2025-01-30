@@ -14,7 +14,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-const response=await axios.post("http://localhost:3000/api/users/login", credentials);
+const response=await axios.post("https://ondutymanagementproject-mern-2.onrender.com/api/users/login", credentials);
 
 if(response.data.success){
 

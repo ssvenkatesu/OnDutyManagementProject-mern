@@ -21,7 +21,7 @@ const DutyList = () => {
           return;
         }
 
-        const response = await axios.get(`http://localhost:3000/api/duties`, {
+        const response = await axios.get(`https://ondutymanagementproject-mern-2.onrender.com/api/duties`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -94,7 +94,7 @@ const DutyList = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/duties/${dutyId}/status`, {
+      const response = await fetch(`https://ondutymanagementproject-mern-2.onrender.com/api/duties/${dutyId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
