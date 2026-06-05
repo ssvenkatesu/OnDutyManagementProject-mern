@@ -1,7 +1,6 @@
-
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import AppNavbar from "./AppNavbar";
 
 const LandingPage = () => {
   const [user, setUser] = useState(null);
@@ -10,7 +9,7 @@ const LandingPage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUser(JSON.parse(atob(token.split(".")[1]))); // Decode JWT payload
+      setUser(JSON.parse(atob(token.split(".")[1])));
     }
   }, []);
 
@@ -22,54 +21,65 @@ const LandingPage = () => {
     }
   };
 
-  return (
-    <div className="landing-page">
-      <Navbar user={user} setUser={setUser} />
-      <div className="intro-section">
-        <h1>Welcome to On Duty Management System</h1>
-        <p>Your solution for managing duties efficiently.</p>
-        <button onClick={goToDashboard} className="homepage-button">
-          {user ? (user.role === "in-charge" ? "Go to Incharge Dashboard" : "Go to User Dashboard") : "Login to Start"}
-          
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const Navbar = ({ user, setUser }) => {
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     setUser(null);
     navigate("/login");
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          On Duty Management System
-          <br/>
-        </Link>
-        <div className="navbar-links">
-          {!user ? (
-            <>
-              <Link to="/login" className="nav-link">Login</Link>
-              <Link to="/register" className="nav-link">Register</Link>
-            </>
-          ) : (
-            <>
-              <Link to="/" className="nav-link">Home</Link>
-              <button className="logout-button" onClick={handleLogout}>Logout</button>
-            </>
-          )}
+    <div className="landing-page">
+      <AppNavbar>
+        {!user ? (
+          <>
+            <Link to="/login" className="nav-link">Login</Link>
+            <Link to="/register" className="nav-link">Register</Link>
+          </>
+        ) : (
+          <>
+            <Link to="/" className="nav-link">Home</Link>
+            <button type="button" className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
+      </AppNavbar>
+
+      <section className="intro-section fade-in">
+        <h1>Manage On-Duty Requests Effortlessly</h1>
+        <p>
+          A streamlined platform for teams to submit duty requests, track approvals,
+          and keep everyone aligned — all in one place.
+        </p>
+        <button onClick={goToDashboard} className="btn btn-primary homepage-button">
+          {user
+            ? user.role === "in-charge"
+              ? "Go to Admin Dashboard"
+              : "Go to My Dashboard"
+            : "Get Started — Login"}
+        </button>
+
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon">📋</div>
+            <h3>Submit Requests</h3>
+            <p>Users can request on-duty assignments with title and description.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">✅</div>
+            <h3>Approve & Track</h3>
+            <p>In-charge staff review, approve, or disapprove each request.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon">👥</div>
+            <h3>Role-Based Access</h3>
+            <p>Separate dashboards for users and administrators.</p>
+          </div>
         </div>
-      </div>
-    </nav>
+      </section>
+    </div>
   );
 };
 
 export default LandingPage;
-

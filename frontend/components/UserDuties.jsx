@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
+import api, { getErrorMessage } from '../services/api';
 
-const handleReload = () => {
-  window.location.reload();
+const getStatusClass = (status) => {
+  const s = (status || 'pending').toLowerCase();
+  if (s === 'approved') return 'status-approved';
+  if (s === 'disapproved') return 'status-disapproved';
+  return 'status-pending';
 };
 
 const UserDuties = () => {
@@ -23,13 +25,10 @@ const UserDuties = () => {
           navigate('/login');
           return;
         }
-        const response = await axios.get(`https://ondutymanagementproject-mern-2.onrender.com/api/duties/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
+        const response = await api.get(`/api/duties/${userId}`);
         setDuties(response.data);
       } catch (err) {
-        setError('Error fetching duties');
+        setError(getErrorMessage(err, 'Error fetching duties'));
       } finally {
         setLoading(false);
       }
@@ -40,51 +39,64 @@ const UserDuties = () => {
 
   const handleDelete = async (dutyId) => {
     try {
-      const token = localStorage.getItem('token');
-
-      await axios.delete(`https://ondutymanagementproject-mern-2.onrender.com/api/duties/${dutyId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setDuties(duties.filter((duty) => duty._id !== dutyId)); 
+      await api.delete(`/api/duties/${dutyId}`);
+      setDuties(duties.filter((duty) => duty._id !== dutyId));
     } catch (err) {
-      console.error('Error deleting duty:', err);
-      setError('Error deleting duty');
+      setError(getErrorMessage(err, 'Error deleting duty'));
     }
   };
 
-  if (loading) return <p>Loading duties...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" />
+        <p>Loading your duties…</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="alert-error">{error}</div>;
+  }
 
   return (
-    <div>
-      <h2 align="center">List Of Duties</h2>
-      <br />
+    <div className="panel">
+      <h2>My Duty Requests</h2>
+
       {duties.length > 0 ? (
-        <ul>
+        <div className="duty-grid">
           {duties.map((duty) => (
-            <li key={duty._id}>
-              <strong>Duty Name :</strong> {duty.dutyTitle} <br />
-              <strong>Requested By:</strong> {duty.assignedTo.username}
-              <br />
-              <strong>Duty Description :</strong> {duty.description} <br />
-              <strong>Duty Approval Status :</strong> {duty.status} <br />
-              <strong>Date :</strong> {duty.dateAssigned} <br />
-              <br />
-              <button onClick={() => handleDelete(duty._id)}>Cancel Or Delete Request</button>
-              <hr />
-              
-            </li>
+            <article key={duty._id} className="duty-card">
+              <div className="duty-card-header">
+                <h3 className="duty-card-title">{duty.dutyTitle}</h3>
+                <span className={`status-badge ${getStatusClass(duty.status)}`}>
+                  {duty.status || 'pending'}
+                </span>
+              </div>
+              <div className="duty-meta">
+                <p><strong>Requested by:</strong> {duty.assignedTo?.username || 'N/A'}</p>
+                <p><strong>Description:</strong> {duty.description}</p>
+                <p><strong>Date:</strong> {new Date(duty.dateAssigned).toLocaleDateString()}</p>
+              </div>
+              <div className="duty-card-actions">
+                <button
+                  type="button"
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(duty._id)}
+                >
+                  Cancel Request
+                </button>
+              </div>
+            </article>
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>No duties assigned.</p>
+        <div className="empty-state">
+          <div className="empty-state-icon">📭</div>
+          <p>No duty requests yet. Submit one using the form.</p>
+        </div>
       )}
-      <br />
-    
-      
-      </div>
-    
+    </div>
   );
 };
 

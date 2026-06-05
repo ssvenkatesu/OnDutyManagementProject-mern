@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api, { getErrorMessage } from '../services/api';
 
 const SpecificUser = () => {
   const [user, setUser] = useState(null);
@@ -8,22 +8,18 @@ const SpecificUser = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userId = localStorage.getItem('id'); 
+      const userId = localStorage.getItem('id');
       if (!userId) {
-        setError('No user ID found in localStorage.');
+        setError('No user ID found.');
         setLoading(false);
         return;
       }
 
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`https://ondutymanagementproject-mern-2.onrender.com/api/users/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` }, 
-        });
-        setUser(response.data); // Set user data
+        const response = await api.get(`/api/users/${userId}`);
+        setUser(response.data);
       } catch (err) {
-        console.error(err);
-        setError(err.response?.data?.message || 'Failed to fetch user data.');
+        setError(getErrorMessage(err, 'Failed to fetch user data.'));
       } finally {
         setLoading(false);
       }
@@ -32,26 +28,23 @@ const SpecificUser = () => {
     fetchUser();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return null;
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="alert-error">{error}</div>;
   }
 
+  if (!user) return null;
+
+  const initial = (user.username || '?').charAt(0).toUpperCase();
+
   return (
-    <div className="user-profile">
-      
-      {user ? (
-        <div>
-          
-          <p className='user-name'><strong>Name:</strong> {user.username}</p>
-          
-        </div>
-      ) : (
-        <p>No user data available.</p>
-      )}
+    <div className="profile-card">
+      <div className="profile-avatar">{initial}</div>
+      <div className="profile-info">
+        <strong>{user.username}</strong>
+        <span>Team Member</span>
+      </div>
     </div>
   );
 };

@@ -2,23 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UserList from "../components/UserList";
 
-const   AdminDashboard = () => {
+const AdminDashboard = () => {
   return (
-    <div className="admin-dashboard">
-      <h1>Admin Dashboard</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/duties">Manage Duties</Link>
-          </li>
-          <li>
-            <Link to="/">Back to Home</Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="user-list-section user-duties">
-        <h2>User List</h2>
-        <UserList />
+    <div className="page">
+      <header className="page-header">
+        <h1>Admin Dashboard</h1>
+        <p>Click a user to view their profile and duty requests</p>
+      </header>
+
+      <div className="page-content fade-in">
+        <nav className="dashboard-nav">
+          <Link to="/">Back to Home</Link>
+        </nav>
+
+        <div className="panel">
+          <h2>Registered Users</h2>
+          <UserList excludeAdmins />
+        </div>
       </div>
     </div>
   );

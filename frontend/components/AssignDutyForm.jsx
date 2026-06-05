@@ -1,22 +1,18 @@
-
-
-
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api, { getErrorMessage } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const AssignDutyForm = () => {
   const [user, setUser] = useState(null);
   const [duty, setDuty] = useState({ dutyTitle: "", description: "", assignedTo: "" });
-  const [duties, setDuties] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
-    const fetchUserAndDuties = async () => {
-      const userId = localStorage.getItem("id"); 
+    const fetchUser = async () => {
+      const userId = localStorage.getItem("id");
       const token = localStorage.getItem("token");
 
       if (!userId || !token) {
@@ -26,22 +22,16 @@ const AssignDutyForm = () => {
 
       try {
         setLoading(true);
-        
-       
-        const userResponse = await axios.get(`https://ondutymanagementproject-mern-2.onrender.com/api/users/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(userResponse.data); 
-
-        
+        const userResponse = await api.get(`/api/users/${userId}`);
+        setUser(userResponse.data);
       } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch data.");
+        setError(getErrorMessage(err, "Failed to fetch user data."));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserAndDuties();
+    fetchUser();
   }, [navigate]);
 
   const handleChange = (e) => {
@@ -51,75 +41,81 @@ const AssignDutyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSubmitting(true);
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post("https://ondutymanagementproject-mern-2.onrender.com/api/duties", duty, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setDuties((prevDuties) => [...prevDuties, response.data]); 
+      await api.post("/api/duties", duty);
       setDuty({ dutyTitle: "", description: "", assignedTo: "" });
+      window.location.reload();
     } catch (err) {
-      setError("Error submitting the form. Please try again.");
+      setError(getErrorMessage(err, "Error submitting the form. Please try again."));
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const deleteDuty = async (dutyId) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.delete(`https://ondutymanagementproject-mern-2.onrender.com/api/duties/${dutyId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+  if (loading) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner" />
+        <p>Loading…</p>
+      </div>
+    );
+  }
 
-      setDuties((prevDuties) => prevDuties.filter((duty) => duty._id !== dutyId));
-    } catch (err) {
-      setError("Error deleting duty");
-    }
-  };
-
-  if (loading) return <p>Loading duties...</p>;
-  if (error) return <p>{error}</p>;
+  if (error && !user) {
+    return <div className="alert-error">{error}</div>;
+  }
 
   return (
     <div className="assign-duty-form">
-      <h2>Request For OnDuty</h2>
-      {error && <p className="error-message">{error}</p>}
+      <h2>Request On-Duty</h2>
+      {error && <div className="alert-error">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="dutyTitle"
-          placeholder="Duty Title"
-          value={duty.dutyTitle}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Duty Description"
-          value={duty.description}
-          onChange={handleChange}
-          required
-        />
-        <select
-          name="assignedTo"
-          value={duty.assignedTo}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select User</option>
-          {user && (
-            <option key={user._id} value={user._id}>
-              {user.username}
-            </option>
-          )}
-        </select>
-
-        <button type="submit">Request</button>
-        
+        <div className="form-group">
+          <label htmlFor="dutyTitle">Duty Title</label>
+          <input
+            id="dutyTitle"
+            type="text"
+            name="dutyTitle"
+            placeholder="e.g. Weekend shift coverage"
+            value={duty.dutyTitle}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Describe the duty request…"
+            value={duty.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="assignedTo">Assign To</label>
+          <select
+            id="assignedTo"
+            name="assignedTo"
+            value={duty.assignedTo}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select user</option>
+            {user && (
+              <option key={user._id} value={user._id}>
+                {user.username}
+              </option>
+            )}
+          </select>
+        </div>
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Submitting…" : "Submit Request"}
+        </button>
       </form>
-
-      
     </div>
   );
 };

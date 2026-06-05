@@ -1,12 +1,11 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ondutymanagementproject-mern-2.onrender.com", // Replace with your backend URL
+  baseURL: import.meta.env.VITE_API_URL || "",
   headers: {
     "Content-Type": "application/json",
   },
 });
-
 
 api.interceptors.request.use(
   (config) => {
@@ -18,5 +17,9 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+export const getErrorMessage = (error, fallback = "Something went wrong") => {
+  return error.response?.data?.message || error.message || fallback;
+};
 
 export default api;
