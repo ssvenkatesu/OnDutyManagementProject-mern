@@ -517,7 +517,7 @@ General Reset
   background-color: #c0392b;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .navbar-container {
     flex-direction: column;
@@ -543,7 +543,6 @@ General Reset
 
 
 
-/* LandingPage.css */
 
 body {
   font-family: 'Arial', sans-serif;
@@ -668,7 +667,7 @@ body {
 
 
 
-/* General styling for the dashboard */
+
 .admin-dashboard {
   font-family: 'Arial', sans-serif;
   background-color: #f4fcfb;
@@ -678,14 +677,14 @@ body {
   min-height: 100vh;
 }
 
-/* Heading styles */
+
 .admin-dashboard h1 {
   font-size: 2.5rem;
   color: #4caf50;
   margin-bottom: 20px;
 }
 
-/* Navigation styles */
+
 nav ul {
   list-style-type: none;
   padding: 0;
@@ -713,7 +712,7 @@ nav ul li a:hover {
   background-color: #45a049;
 }
 
-/* User list section */
+
 .user-list-section {
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -733,7 +732,7 @@ nav ul li a:hover {
   padding-bottom: 5px;
 }
 
-/* General list styles */
+
 .user-list-section ul {
   list-style: none;
   padding: 0;
@@ -754,7 +753,7 @@ nav ul li a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Button styles for additional actions */
+
 button {
   background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
   color: white;
@@ -770,7 +769,7 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
@@ -790,7 +789,7 @@ button:hover {
 
 
 
-/* user-dashboard.css */
+
 .user-dashboard,.admin-dashboard {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -872,7 +871,7 @@ button:hover {
   text-align: center;
 }
 
-/* admin-dashboard.css */
+
 .admin-dashboard {
   font-family: 'Arial', sans-serif;
   margin: 0px;
@@ -938,7 +937,6 @@ button:hover {
   background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
 }
 
-/* Admin Dashboard User List Section */
 .admin-user-list-section {
   text-align: center;
 }
@@ -966,7 +964,7 @@ button:hover {
   max-width: 50vw;
   margin: 0 auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
@@ -993,7 +991,7 @@ button:hover {
 
 
 
-/* Navbar.css */
+
 
 .navbar {
   background: linear-gradient(to right, #09ea2e, #009688,#09ea2e, #009688);
@@ -1079,7 +1077,7 @@ button:hover {
   color: #009688;
 }
 
-/* Responsive Navbar */
+
 @media screen and (max-width: 768px) {
   .navbar-container {
     flex-direction: column;

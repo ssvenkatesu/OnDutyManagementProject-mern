@@ -73,6 +73,7 @@ const UserDuties = () => {
               <br />
               <button onClick={() => handleDelete(duty._id)}>Cancel Or Delete Request</button>
               <hr />
+              
             </li>
           ))}
         </ul>

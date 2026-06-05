@@ -7,18 +7,29 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const MONGO_URI =
+  process.env.MONGO_URI || 'mongodb+srv://venkatesu:sankara2718@cluster0.9uflh.mongodb.net/ondutymanagement';
+const JWT_SECRET = process.env.JWT_SECRET || 'my_secret';
 
 app.use(cors());
 app.use(bodyParser.json());
 
 mongoose
-  .connect('mongodb+srv://venkatesu:sankara2718@cluster0.9uflh.mongodb.net/ondutymanagement', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
-  .catch((err) => console.log('MongoDB connection failed: ', err));
+  .catch((err) => console.log('MongoDB connection failed: ', err.message));
+
+const dbReady = (res) => {
+  if (mongoose.connection.readyState !== 1) {
+    res.status(503).json({
+      message: 'Database is not connected. Please start MongoDB and restart the server.',
+      success: false,
+    });
+    return false;
+  }
+  return true;
+};
 
 
 const UserSchema = new mongoose.Schema({
@@ -49,7 +60,7 @@ const verifyToken = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token,"my_secret");
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
@@ -68,35 +79,69 @@ app.get('/', (req, res) => {
 app.post('/api/users/register', async (req, res) => {
   const { username, password, role } = req.body;
 
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required', success: false });
+  }
+
+  if (role && role !== 'user') {
+    return res.status(403).json({
+      message: 'Admin accounts cannot be created via registration',
+      success: false,
+    });
+  }
+
+  if (!dbReady(res)) return;
+
   try {
+    const existing = await User.findOne({ username });
+    if (existing) {
+      return res.status(400).json({ message: 'Username already exists', success: false });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = new User({ username, password: hashedPassword, role });
+    const newUser = new User({ username, password: hashedPassword, role: 'user' });
     await newUser.save();
-    res.status(201).json({ message: 'User registered successfully',success:true });
+    res.status(201).json({ message: 'User registered successfully', success: true });
   } catch (error) {
-    res.status(500).json({ message: 'Error registering user', error });
+    console.error('Register error:', error);
+    res.status(500).json({ message: 'Error registering user', success: false });
   }
 });
 
 app.post('/api/users/login', async (req, res) => {
   const { username, password } = req.body;
-  
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required', success: false });
+  }
+
+  if (!dbReady(res)) return;
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials', success: false });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials', success: false });
+    }
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, "my_secret", {
-      expiresIn: '1h',
+    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
+      expiresIn: '24h',
     });
 
-    res.status(200).json({ message: 'Login successful', token ,success:true,user:user._id});
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+      success: true,
+      user: user._id,
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error logging in', error });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Error logging in', success: false });
   }
 });
 
@@ -113,7 +158,7 @@ app.get('/api/users/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = await User.findById(id).select('username'); 
+    const user = await User.findById(id).select('username role');
     if (!user) {
       return res.status(404).json({ message: 'User not found' }); 
     }
@@ -124,28 +169,7 @@ app.get('/api/users/:id', verifyToken, async (req, res) => {
   }
 });
 
-// app.delete('/api/users/:id', verifyToken, async (req, res) => {
-//   const { id } = req.params;
 
-//   try {
-//     await User.findByIdAndDelete(id);
-//     res.status(200).json({ message: 'User deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error deleting user', error });
-//   }
-// });
-
-// app.put('/api/users/:id', verifyToken, async (req, res) => {
-//   const { id } = req.params;
-//   const { username, password, role } = req.body;
-
-//   try {
-//     const updatedUser = await User.findByIdAndUpdate(id, { username, password, role }, { new: true });
-//     res.status(200).json({ message: 'User updated successfully', updatedUser });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error updating user', error });
-//   }
-// });
 
 
 app.post('/api/duties', verifyToken, async (req, res) => {
